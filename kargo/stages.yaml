@@ -22,7 +22,8 @@ spec:
       steps:
       - uses: git-clone
         config:
-          repoURL: https://github.com/mastercam123/kargo-helm.git
+          #repoURL: https://github.com/mastercam123/kargo-helm.git
+          repoURL: https://github.com/Devoteam/DEACloud_kargo-helm.git
           checkout:
           - fromFreight: true
             path: ./src
@@ -61,5 +62,6 @@ spec:
           apps:
           - name: kargo-helm-dev
             sources:
-            - repoURL: https://github.com/mastercam123/kargo-helm.git
+            - #repoURL: https://github.com/mastercam123/kargo-helm.git
+              repoURL: https://github.com/Devoteam/DEACloud_kargo-helm.git
               desiredCommitFromStep: commit

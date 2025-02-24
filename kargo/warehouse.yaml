@@ -22,5 +22,6 @@ spec:
       commitSelectionStrategy: NewestFromBranch
       discoveryLimit: 20
       repoURL: https://github.com/mastercam123/kargo-helm.git
+      #repoUrl: https://github.com/Devoteam/DEACloud_kargo-helm.git
       includePaths:
       - base/feature-flags.yaml

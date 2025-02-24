@@ -1,5 +1,5 @@
 image:
-  repository: ghcr.io/jessesuen/guestbook
+  repository: ghcr.io/mastercam123/guestbook
   pullPolicy: IfNotPresent
   tag: latest
 

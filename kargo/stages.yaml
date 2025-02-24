@@ -22,7 +22,7 @@ spec:
       steps:
       - uses: git-clone
         config:
-          repoURL: https://github.com/jessesuen/kargo-helm.git
+          repoURL: https://github.com/mastercam123/kargo-helm.git
           checkout:
           - fromFreight: true
             path: ./src
@@ -34,7 +34,7 @@ spec:
         config:
           path: ./out/env/dev/values.yaml
           images:
-          - image: ghcr.io/jessesuen/guestbook
+          - image: ghcr.io/mastercam123/guestbook
             key: image.tag
             value: Tag
 
@@ -61,5 +61,5 @@ spec:
           apps:
           - name: kargo-helm-dev
             sources:
-            - repoURL: https://github.com/jessesuen/kargo-helm.git
+            - repoURL: https://github.com/mastercam123/kargo-helm.git
               desiredCommitFromStep: commit

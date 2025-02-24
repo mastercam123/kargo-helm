@@ -15,4 +15,4 @@ spec:
   - group: '*'
     kind: '*'
   sourceRepos:
-  - https://github.com/Devoteam/DEACloud_kargo-helm.git
+  - https://github.com/mastercam123/DEACloud_kargo-helm.git

@@ -6,7 +6,7 @@ metadata:
 spec:
   subscriptions:
   - image:
-      repoURL: ghcr.io/jessesuen/guestbook
+      repoURL: ghcr.io/mastercam123/guestbook
       imageSelectionStrategy: SemVer
 
 ---
@@ -21,6 +21,6 @@ spec:
       branch: main
       commitSelectionStrategy: NewestFromBranch
       discoveryLimit: 20
-      repoURL: https://github.com/jessesuen/kargo-helm.git
+      repoURL: https://github.com/mastercam123/kargo-helm.git
       includePaths:
       - base/feature-flags.yaml

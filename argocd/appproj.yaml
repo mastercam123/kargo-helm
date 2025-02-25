@@ -16,4 +16,3 @@ spec:
     kind: '*'
   sourceRepos:
   - https://github.com/mastercam123/kargo-helm.git
-  #- https://github.com/mastercam123/DEACloud_kargo-helm.git

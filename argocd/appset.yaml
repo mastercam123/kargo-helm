@@ -18,7 +18,8 @@ spec:
     spec:
       destination:
         namespace: kargo-helm-{{path.basename}}
-        name: demo
+        #name: demo
+        server: https://kubernetes.default.svc
       project: kargo-helm
       source:
         path: charts/guestbook
@@ -27,3 +28,6 @@ spec:
           valueFiles:
           - "/env/{{path.basename}}/values.yaml"
           - "/env/{{path.basename}}/feature-flags.yaml"
+      syncPolicy:
+        syncOptions:
+        - CreateNamespace=true

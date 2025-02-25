@@ -79,12 +79,17 @@ spec:
       kind: Warehouse
       name: guestbook
     sources:
-      direct: true
+      stages:
+      - name: dev
+        direct: true
   - origin:
       kind: Warehouse
       name: features
     sources:
-      direct: true
+      stages:
+      - name: dev
+        direct: true
+
   promotionTemplate:
     spec:
       steps:

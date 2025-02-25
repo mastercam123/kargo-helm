@@ -153,8 +153,8 @@ spec:
       steps:
       - uses: git-clone
         config:
-          repoURL: ${{ vars.gitRepo }}
-          #repoURL: https://github.com/Devoteam/DEACloud_kargo-helm.git
+          #repoURL: ${{ vars.gitRepo }}
+          repoURL: https://github.com/mastercam123/kargo-helm.git
           checkout:
           - commit: 1dbc2d21ffae37e026f3b7d91636e00b1a2dd656
             path: ./src

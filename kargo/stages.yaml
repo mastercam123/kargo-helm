@@ -80,13 +80,13 @@ spec:
       name: guestbook
     sources:
       stages:
-      - name: dev
+      - dev
   - origin:
       kind: Warehouse
       name: features
     sources:
       stages:
-      - name: dev
+      - dev
   promotionTemplate:
     spec:
       steps:

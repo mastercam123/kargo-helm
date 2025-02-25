@@ -88,7 +88,7 @@ spec:
           repoURL: https://github.com/mastercam123/kargo-helm.git
           #repoURL: https://github.com/Devoteam/DEACloud_kargo-helm.git
           checkout:
-          - commit: cc69859a6bedaef633e8b535048d34a56cf61310da0954a9ac44ff05088825e2
+          - commit: 3753e2a816119cd66c8ba48aff9d2c680f2d2616
             #fromFreight: true
             path: ./src
           - branch: main

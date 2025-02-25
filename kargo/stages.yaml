@@ -81,15 +81,12 @@ spec:
     sources:
       stages:
       - name: dev
-        direct: true
   - origin:
       kind: Warehouse
       name: features
     sources:
       stages:
       - name: dev
-        direct: true
-
   promotionTemplate:
     spec:
       steps:

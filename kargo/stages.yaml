@@ -12,11 +12,6 @@ spec:
       name: guestbook
     sources:
       direct: true
-  - origin:
-      kind: Warehouse
-      name: features
-    sources:
-      direct: true
   promotionTemplate:
     spec:
       steps:
@@ -81,12 +76,6 @@ spec:
     sources:
       stages:
       - dev
-  - origin:
-      kind: Warehouse
-      name: features
-    sources:
-      stages:
-      - dev
   promotionTemplate:
     spec:
       steps:
@@ -130,7 +119,71 @@ spec:
       - uses: argocd-update
         config:
           apps:
-          - name: kargo-helm-dev
+          - name: kargo-helm-staging
+            sources:
+            - repoURL: https://github.com/mastercam123/kargo-helm.git
+              #repoURL: https://github.com/Devoteam/DEACloud_kargo-helm.git
+              desiredCommitFromStep: commit
+---
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Stage
+metadata:
+  name: prod
+  namespace: kargo-helm
+  annotations:
+    kargo.akuity.io/color: blue
+spec:
+  requestedFreight:
+  - origin:
+      kind: Warehouse
+      name: guestbook
+    sources:
+      stages:
+      - staging
+  promotionTemplate:
+    spec:
+      steps:
+      - uses: git-clone
+        config:
+          repoURL: https://github.com/mastercam123/kargo-helm.git
+          #repoURL: https://github.com/Devoteam/DEACloud_kargo-helm.git
+          checkout:
+          - fromFreight: true
+            path: ./src
+          - branch: main
+            path: ./out
+
+      - uses: helm-update-image
+        as: update-image
+        config:
+          path: ./out/env/prod/values.yaml
+          images:
+          - image: ghcr.io/mastercam123/guestbook
+            key: image.tag
+            value: Tag
+
+      - uses: copy
+        config:
+          inPath: ./src/base/feature-flags.yaml
+          outPath: ./out/env/prod/feature-flags.yaml
+
+      # Commit the changes to the Git repository.
+      - uses: git-commit
+        as: commit
+        config:
+          path: ./out
+          messageFromSteps:
+          - update-image
+
+      # Push the changes to the Git repository.
+      - uses: git-push
+        config:
+          path: ./out
+
+      - uses: argocd-update
+        config:
+          apps:
+          - name: kargo-helm-prod
             sources:
             - repoURL: https://github.com/mastercam123/kargo-helm.git
               #repoURL: https://github.com/Devoteam/DEACloud_kargo-helm.git

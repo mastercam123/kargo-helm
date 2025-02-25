@@ -156,7 +156,7 @@ spec:
           repoURL: ${{ vars.gitRepo }}
           #repoURL: https://github.com/Devoteam/DEACloud_kargo-helm.git
           checkout:
-          - commit: ${{ commitFrom(vars.gitRepo).ID }}
+          - commit: 1dbc2d21ffae37e026f3b7d91636e00b1a2dd656
             path: ./src
           - branch: main
             path: ./out

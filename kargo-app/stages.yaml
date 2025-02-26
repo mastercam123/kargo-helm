@@ -20,6 +20,8 @@ spec:
           repoURL: https://github.com/mastercam123/kargo-helm.git
           checkout:
           - branch: main
+            path: ./src
+          - branch: main
             path: ./out
 
       - uses: helm-update-image

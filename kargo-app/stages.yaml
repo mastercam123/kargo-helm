@@ -71,6 +71,9 @@ spec:
   - origin:
       kind: Warehouse
       name: dev
+    sources:
+      stages:
+      - dev
   promotionTemplate:
     spec:
       steps:
@@ -128,6 +131,9 @@ spec:
   - origin:
       kind: Warehouse
       name: staging
+    sources:
+      stages:
+      - staging
   promotionTemplate:
     spec:
       steps:

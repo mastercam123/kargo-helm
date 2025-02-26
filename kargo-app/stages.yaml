@@ -19,10 +19,8 @@ spec:
         config:
           repoURL: https://github.com/mastercam123/kargo-helm.git
           checkout:
-          - fromFreight: true
-            path: ./src
           - branch: main
-            path: ./out
+            path: ./src
 
       - uses: helm-update-image
         as: update-image

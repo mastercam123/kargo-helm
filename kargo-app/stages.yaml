@@ -20,14 +20,14 @@ spec:
           repoURL: https://github.com/mastercam123/kargo-helm.git
           checkout:
           - branch: main
-            path: ./src
+            path: ./out
 
       - uses: helm-update-image
         as: update-image
         config:
           path: ./out/env-app/dev/values.yaml
           images:
-          - image: ghcr.io/mastercam123/guestbook
+          - image: ghcr.io/mastercam123/flask
             key: image.tag
             value: Tag
 

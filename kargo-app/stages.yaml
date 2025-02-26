@@ -69,7 +69,7 @@ metadata:
 spec:
   requestedFreight:
   - origin:
-      kind: Stage
+      kind: Warehouse
       name: dev
   promotionTemplate:
     spec:
@@ -126,7 +126,7 @@ metadata:
 spec:
   requestedFreight:
   - origin:
-      kind: Stage
+      kind: Warehouse
       name: staging
   promotionTemplate:
     spec:

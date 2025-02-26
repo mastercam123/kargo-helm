@@ -1,10 +1,10 @@
 apiVersion: kargo.akuity.io/v1alpha1
 kind: Warehouse
 metadata:
-  name: nginx
-  namespace: kargo-demo
+  name: flask
+  namespace: kargo-flask
 spec:
   subscriptions:
   - image:
-      repoURL: ghcr.io/mastercam123/guestbook
+      repoURL: ghcr.io/mastercam123/flask
       imageSelectionStrategy: SemVer

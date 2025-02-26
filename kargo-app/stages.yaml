@@ -1,0 +1,174 @@
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Stage
+metadata:
+  name: dev
+  namespace: kargo-flask
+  annotations:
+    kargo.akuity.io/color: red
+spec:
+  requestedFreight:
+  - origin:
+      kind: Warehouse
+      name: flask
+    sources:
+      direct: true
+  promotionTemplate:
+    spec:
+      steps:
+      - uses: git-clone
+        config:
+          repoURL: https://github.com/mastercam123/kargo-helm.git
+          checkout:
+          - fromFreight: true
+            path: ./src
+          - branch: main
+            path: ./out
+
+      - uses: helm-update-image
+        as: update-image
+        config:
+          path: ./out/env-app/dev/values.yaml
+          images:
+          - image: ghcr.io/mastercam123/guestbook
+            key: image.tag
+            value: Tag
+
+      - uses: copy
+        config:
+          inPath: ./src/base/feature-flags.yaml
+          outPath: ./out/env-app/dev/feature-flags.yaml
+
+      # Commit the changes to the Git repository.
+      - uses: git-commit
+        as: commit
+        config:
+          path: ./out
+          messageFromSteps:
+          - update-image
+
+      # Push the changes to the Git repository.
+      - uses: git-push
+        config:
+          path: ./out
+
+      - uses: argocd-update
+        config:
+          apps:
+          - name: kargo-helm-dev
+            sources:
+            - repoURL: https://github.com/mastercam123/kargo-helm.git
+              desiredCommitFromStep: commit
+---
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Stage
+metadata:
+  name: staging
+  namespace: kargo-flask
+  annotations:
+    kargo.akuity.io/color: green
+spec:
+  requestedFreight:
+  - origin:
+      kind: Stage
+      name: dev
+  promotionTemplate:
+    spec:
+      steps:
+      - uses: git-clone
+        config:
+          repoURL: https://github.com/mastercam123/kargo-helm.git
+          checkout:
+          - branch: main
+            path: ./out
+
+      - uses: helm-update-image
+        as: update-image
+        config:
+          path: ./out/env-app/staging/values.yaml
+          images:
+          - image: ghcr.io/mastercam123/flask
+            key: image.tag
+            value: Tag
+
+      - uses: copy
+        config:
+          inPath: ./src/base/feature-flags.yaml
+          outPath: ./out/env-app/staging/feature-flags.yaml
+
+      # Commit the changes to the Git repository.
+      - uses: git-commit
+        as: commit
+        config:
+          path: ./out
+          messageFromSteps:
+          - update-image
+
+      # Push the changes to the Git repository.
+      - uses: git-push
+        config:
+          path: ./out
+
+      - uses: argocd-update
+        config:
+          apps:
+          - name: kargo-helm-staging
+            sources:
+            - repoURL: https://github.com/mastercam123/kargo-helm.git
+              desiredCommitFromStep: commit
+---
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Stage
+metadata:
+  name: prod
+  namespace: kargo-flask
+  annotations:
+    kargo.akuity.io/color: blue
+spec:
+  requestedFreight:
+  - origin:
+      kind: Stage
+      name: staging
+  promotionTemplate:
+    spec:
+      steps:
+      - uses: git-clone
+        config:
+          repoURL: https://github.com/mastercam123/kargo-helm.git
+          checkout:
+          - branch: main
+            path: ./out
+
+      - uses: helm-update-image
+        as: update-image
+        config:
+          path: ./out/env-app/prod/values.yaml
+          images:
+          - image: ghcr.io/mastercam123/flask
+            key: image.tag
+            value: Tag
+
+      - uses: copy
+        config:
+          inPath: ./src/base/feature-flags.yaml
+          outPath: ./out/env-app/prod/feature-flags.yaml
+
+      # Commit the changes to the Git repository.
+      - uses: git-commit
+        as: commit
+        config:
+          path: ./out
+          messageFromSteps:
+          - update-image
+
+      # Push the changes to the Git repository.
+      - uses: git-push
+        config:
+          path: ./out
+
+      - uses: argocd-update
+        config:
+          apps:
+          - name: kargo-helm-prod
+            sources:
+            - repoURL: https://github.com/mastercam123/kargo-helm.git
+              desiredCommitFromStep: commit

@@ -22,7 +22,8 @@ spec:
         config:
           repoURL: ${{ vars.gitRepo }}
           checkout:
-          - branch: ${{ commitFrom(vars.gitRepo) }}
+          - branch: main
+            commit: ${{ commitFrom(vars.gitRepo) }}
             path: ./src
           - branch: main
             path: ./out

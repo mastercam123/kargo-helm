@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-app
+  labels:
+    app: flask-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask-app
+  template:
+    metadata:
+      labels:
+        app: flask-app
+    spec:
+      containers:
+      - name: flask-app
+        image: ghcr.io/mastercam123/kargo-flask-demo:latest
+        ports:
+        - containerPort: 5000
+        env:
+        - name: IMAGE_VERSION
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.annotations['kargo.akuity.io/image-tag']

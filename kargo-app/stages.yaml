@@ -14,12 +14,15 @@ spec:
       direct: true
   promotionTemplate:
     spec:
+      vars:
+      - name: gitRepo
+        value: https://github.com/mastercam123/kargo-helm.git
       steps:
       - uses: git-clone
         config:
-          repoURL: https://github.com/mastercam123/kargo-helm.git
+          repoURL: ${{ vars.gitRepo }}
           checkout:
-          - branch: main
+          - branch: ${{ commitFrom(vars.gitRepo) }}
             path: ./src
           - branch: main
             path: ./out

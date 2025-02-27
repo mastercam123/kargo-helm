@@ -35,7 +35,7 @@ spec:
       - uses: helm-update-image
         as: update-image
         config:
-          path: ./out/env-demo/dev/values.yaml
+          path: ./src/env-demo/dev/values.yaml
           images:
           - image: ghcr.io/mastercam123/flask-demo
             key: image.tag

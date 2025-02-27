@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: kargo-flask-demo
+  namespace: argocd
+spec:
+  generators:
+  - git:
+      repoURL: https://github.com/mastercam123/kargo-helm.git
+      revision: HEAD
+      directories:
+      - path: env-demo/*
+  template:
+    metadata:
+      name: kargo-flask-demo-{{path.basename}}
+      annotations:
+        kargo.akuity.io/authorized-stage: kargo-flask-demo:{{path.basename}}
+    spec:
+      destination:
+        namespace: kargo-flask-demo-{{path.basename}}
+        #name: demo
+        server: https://kubernetes.default.svc
+      project: kargo-flask-demo
+      source:
+        path: charts/flask-demo
+        repoURL: https://github.com/mastercam123/kargo-helm.git
+        helm:
+          valueFiles:
+          - "/env-demo/{{path.basename}}/values.yaml"
+          - "/env-demo/{{path.basename}}/feature-flags.yaml"
+      syncPolicy:
+        syncOptions:
+        - CreateNamespace=true

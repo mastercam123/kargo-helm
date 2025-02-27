@@ -24,7 +24,7 @@ spec:
         config:
           repoURL: ${{ vars.gitRepo }}
           checkout:
-          - branch: ${{ vars.sourceBranch }}
+          - fromFreight: true
             path: ./src
           - branch: env-demo/dev
             create: true

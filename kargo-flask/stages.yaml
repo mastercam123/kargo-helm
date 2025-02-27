@@ -24,8 +24,10 @@ spec:
         config:
           repoURL: ${{ vars.gitRepo }}
           checkout:
-          - fromFreight: true
+          - branch: ${{ vars.sourceBranch }}
             path: ./src
+          #- fromFreight: true
+          #  path: ./src
           - branch: main
             create: true
             path: ./out

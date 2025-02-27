@@ -51,7 +51,8 @@ spec:
         as: commit
         config:
           path: ./out
-          message: "Updating environment for dev"
+          messageFromSteps:
+          - update-image
 
       # Push the changes to the Git repository.
       - uses: git-push
@@ -64,7 +65,8 @@ spec:
           - name: kargo-flask-demo-dev
             sources:
             - repoURL: https://github.com/mastercam123/kargo-helm.git
-              desiredCommitFromStep: commit
+              #desiredCommitFromStep: commit
+              desiredRevision: ${{ outputs.commit.commit }}
 ---
 apiVersion: kargo.akuity.io/v1alpha1
 kind: Stage

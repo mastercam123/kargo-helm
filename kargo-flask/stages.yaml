@@ -65,8 +65,7 @@ spec:
           - name: kargo-flask-demo-dev
             sources:
             - repoURL: https://github.com/mastercam123/kargo-helm.git
-              #desiredCommitFromStep: commit
-              desiredRevision: ${{ outputs.commit.commit }}
+              desiredCommitFromStep: commit
 ---
 apiVersion: kargo.akuity.io/v1alpha1
 kind: Stage

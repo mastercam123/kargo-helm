@@ -28,7 +28,7 @@ spec:
             path: ./src
           #- fromFreight: true
           #  path: ./src
-          - branch: main
+          - branch: env-demo/dev
             create: true
             path: ./out
 

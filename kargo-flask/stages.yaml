@@ -69,43 +69,48 @@ apiVersion: kargo.akuity.io/v1alpha1
 kind: Stage
 metadata:
   name: staging
-  namespace: kargo-flask
+  namespace: kargo-flask-demo
   annotations:
     kargo.akuity.io/color: green
 spec:
   requestedFreight:
   - origin:
       kind: Warehouse
-      name: flask
+      name: flask-demo
     sources:
       stages:
       - dev
   promotionTemplate:
     spec:
+      vars:
+      - name: gitRepo
+        value: https://github.com/mastercam123/kargo-helm.git
+      - name: sourceBranch
+        value: main
       steps:
       - uses: git-clone
         config:
-          repoURL: https://github.com/mastercam123/kargo-helm.git
+          repoURL: ${{ vars.gitRepo }}
           checkout:
-          - commit: a41d303af5c6e559b08aceec1fafd947ca668af1
+          - branch: ${{ vars.sourceBranch }}
             path: ./src
-          - branch: main
+          - branch: stage/staging
             path: ./out
             create: true
 
       - uses: helm-update-image
         as: update-image
         config:
-          path: ./out/env-app/dev/values.yaml
+          path: ./out/env-demo/staging/values.yaml
           images:
-          - image: ghcr.io/mastercam123/flask
+          - image: ghcr.io/mastercam123/flask-demo
             key: image.tag
             value: Tag
 
       - uses: copy
         config:
           inPath: ./src/base/feature-flags.yaml
-          outPath: ./out/env-app/staging/feature-flags.yaml
+          outPath: ./out/env-demo/staging/feature-flags.yaml
 
       # Commit the changes to the Git repository.
       - uses: git-commit
@@ -132,40 +137,48 @@ apiVersion: kargo.akuity.io/v1alpha1
 kind: Stage
 metadata:
   name: prod
-  namespace: kargo-flask
+  namespace: kargo-flask-demo
   annotations:
     kargo.akuity.io/color: blue
 spec:
   requestedFreight:
   - origin:
       kind: Warehouse
-      name: flask
+      name: flask-demo
     sources:
       stages:
       - staging
   promotionTemplate:
     spec:
+      vars:
+      - name: gitRepo
+        value: https://github.com/mastercam123/kargo-helm.git
+      - name: sourceBranch
+        value: main
       steps:
       - uses: git-clone
         config:
-          repoURL: https://github.com/mastercam123/kargo-helm.git
+          repoURL: ${{ vars.gitRepo }}
           checkout:
-          - branch: main
+          - branch: ${{ vars.sourceBranch }}
+            path: ./src
+          - branch: stage/prod
+            create: true
             path: ./out
 
       - uses: helm-update-image
         as: update-image
         config:
-          path: ./out/env-app/prod/values.yaml
+          path: ./out/env-demo/prod/values.yaml
           images:
-          - image: ghcr.io/mastercam123/flask
+          - image: ghcr.io/mastercam123/flask-demo
             key: image.tag
             value: Tag
 
       - uses: copy
         config:
           inPath: ./src/base/feature-flags.yaml
-          outPath: ./out/env-app/prod/feature-flags.yaml
+          outPath: ./out/env-demo/prod/feature-flags.yaml
 
       # Commit the changes to the Git repository.
       - uses: git-commit

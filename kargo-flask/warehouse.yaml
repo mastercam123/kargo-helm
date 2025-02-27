@@ -8,5 +8,5 @@ spec:
   - image:
       repoURL: ghcr.io/mastercam123/flask-demo
       imageSelectionStrategy: SemVer
-  - git:
-      repoURL: https://github.com/mastercam123/kargo-helm.git
+  #- git:
+  #    repoURL: https://github.com/mastercam123/kargo-helm.git

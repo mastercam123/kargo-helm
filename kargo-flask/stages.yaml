@@ -51,8 +51,7 @@ spec:
         as: commit
         config:
           path: ./out
-          messageFromSteps:
-          - update-image
+          message: "Updating environment for dev"
 
       # Push the changes to the Git repository.
       - uses: git-push

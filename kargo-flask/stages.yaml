@@ -31,7 +31,9 @@ spec:
           - branch: env-demo/dev
             create: true
             path: ./out
-
+      - uses: git-clear
+        config:
+          path: ./out
       - uses: helm-update-image
         as: update-image
         config:
@@ -65,7 +67,7 @@ spec:
           - name: kargo-flask-demo-dev
             sources:
             - repoURL: https://github.com/mastercam123/kargo-helm.git
-              desiredCommitFromStep: commit
+              desiredRevision: ${{ outputs.commit.commit }}
 ---
 apiVersion: kargo.akuity.io/v1alpha1
 kind: Stage

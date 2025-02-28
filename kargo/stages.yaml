@@ -28,8 +28,7 @@ spec:
           repoURL: ${{ vars.gitRepo }}
           #repoURL: https://github.com/Devoteam/DEACloud_kargo-helm.git
           checkout:
-          - commit: 3753e2a816119cd66c8ba48aff9d2c680f2d2616
-            #fromFreight: true
+          - fromFreight: true
             path: ./src
           - branch: main
             path: ./out
@@ -99,8 +98,7 @@ spec:
           repoURL: https://github.com/mastercam123/kargo-helm.git
           #repoURL: https://github.com/Devoteam/DEACloud_kargo-helm.git
           checkout:
-          - commit: 3753e2a816119cd66c8ba48aff9d2c680f2d2616
-            #fromFreight: true
+          - fromFreight: true
             path: ./src
           - branch: main
             path: ./out

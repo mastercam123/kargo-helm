@@ -10,20 +10,20 @@ spec:
       imageSelectionStrategy: SemVer
 
 ---
-# apiVersion: kargo.akuity.io/v1alpha1
-# kind: Warehouse
-# metadata:
-#   name: features
-#   namespace: kargo-helm
-# spec:
-#   subscriptions:
-#   - git:
-#       branch: main
-#       commitSelectionStrategy: NewestFromBranch
-#       discoveryLimit: 20
-#       repoURL: https://github.com/mastercam123/kargo-helm.git
-#       #repoUrl: https://github.com/Devoteam/DEACloud_kargo-helm.git
-#       includePaths:
-#       - base/feature-flags.yaml
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Warehouse
+metadata:
+  name: features
+  namespace: kargo-helm
+spec:
+  subscriptions:
+  - git:
+      branch: main
+      commitSelectionStrategy: NewestFromBranch
+      discoveryLimit: 20
+      repoURL: https://github.com/mastercam123/kargo-helm.git
+      #repoUrl: https://github.com/Devoteam/DEACloud_kargo-helm.git
+      includePaths:
+      - base/feature-flags.yaml
 
 

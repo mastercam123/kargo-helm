@@ -12,6 +12,11 @@ spec:
       name: guestbook
     sources:
       direct: true
+  - origin:
+      kind: Warehouse
+      name: features
+    sources:
+      direct: true
   promotionTemplate:
     spec:
       vars:
@@ -80,6 +85,12 @@ spec:
     sources:
       stages:
       - dev
+  - origin:
+      kind: Warehouse
+      name: features
+    sources:
+      stages:
+      - dev
   promotionTemplate:
     spec:
       steps:
@@ -142,6 +153,12 @@ spec:
   - origin:
       kind: Warehouse
       name: guestbook
+    sources:
+      stages:
+      - staging
+  - origin:
+      kind: Warehouse
+      name: features
     sources:
       stages:
       - staging

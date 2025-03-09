@@ -1,7 +1,5 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
-annotations:
-  argocd.argoproj.io/sync-wave: "0"
 metadata:
   name: flask
   namespace: argocd

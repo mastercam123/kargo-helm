@@ -12,7 +12,7 @@ spec:
       - path: env-flask/*
   template:
     metadata:
-      name: flask-{{path.basename}}
+      name: flask-demo{{path.basename}}
       annotations:
         kargo.akuity.io/authorized-stage: flask:{{path.basename}}
     spec:

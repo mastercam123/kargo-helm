@@ -11,7 +11,7 @@ spec:
     kind: Namespace
   destinations:
   - name: '*'
-    namespace: flask-*
+    namespace: flask-demo*
     server: '*'
   namespaceResourceWhitelist:
   - group: '*'

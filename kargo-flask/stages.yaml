@@ -28,6 +28,7 @@ spec:
             path: ./src
           #- fromFreight: true
           #  path: ./src
+          #- branch: ${{ vars.sourceBranch }}
           - branch: env-demo/dev
             create: true
             path: ./out
@@ -42,24 +43,24 @@ spec:
           - image: ghcr.io/mastercam123/flask-demo
             key: image.tag
             value: Tag
-
+### Remember to change .src to .out for the output path
       - uses: copy
         config:
           inPath: ./src/base/feature-flags.yaml
-          outPath: ./out/env-demo/dev/feature-flags.yaml
+          outPath: ./src/env-demo/dev/feature-flags.yaml
 
       # Commit the changes to the Git repository.
       - uses: git-commit
         as: commit
         config:
-          path: ./out
+          path: ./src
           messageFromSteps:
           - update-image
 
       # Push the changes to the Git repository.
       - uses: git-push
         config:
-          path: ./out
+          path: ./src
 
       - uses: argocd-update
         config:
@@ -98,14 +99,14 @@ spec:
           checkout:
           - branch: ${{ vars.sourceBranch }}
             path: ./src
-          - branch: stage/staging
+          - branch: env-demo/staging
             path: ./out
             create: true
 
       - uses: helm-update-image
         as: update-image
         config:
-          path: ./out/env-demo/staging/values.yaml
+          path: ./src/env-demo/staging/values.yaml
           images:
           - image: ghcr.io/mastercam123/flask-demo
             key: image.tag
@@ -114,25 +115,25 @@ spec:
       - uses: copy
         config:
           inPath: ./src/base/feature-flags.yaml
-          outPath: ./out/env-demo/staging/feature-flags.yaml
+          outPath: ./src/env-demo/staging/feature-flags.yaml
 
       # Commit the changes to the Git repository.
       - uses: git-commit
         as: commit
         config:
-          path: ./out
+          path: ./src
           messageFromSteps:
           - update-image
 
       # Push the changes to the Git repository.
       - uses: git-push
         config:
-          path: ./out
+          path: ./src
 
       - uses: argocd-update
         config:
           apps:
-          - name: kargo-flask-staging
+          - name: kargo-flask-demo-staging
             sources:
             - repoURL: https://github.com/mastercam123/kargo-helm.git
               desiredCommitFromStep: commit
@@ -173,7 +174,7 @@ spec:
       - uses: helm-update-image
         as: update-image
         config:
-          path: ./out/env-demo/prod/values.yaml
+          path: ./src/env-demo/prod/values.yaml
           images:
           - image: ghcr.io/mastercam123/flask-demo
             key: image.tag
@@ -188,19 +189,19 @@ spec:
       - uses: git-commit
         as: commit
         config:
-          path: ./out
+          path: ./src
           messageFromSteps:
           - update-image
 
       # Push the changes to the Git repository.
       - uses: git-push
         config:
-          path: ./out
+          path: ./src
 
       - uses: argocd-update
         config:
           apps:
-          - name: kargo-flask-prod
+          - name: kargo-flask-demo-prod
             sources:
             - repoURL: https://github.com/mastercam123/kargo-helm.git
               desiredCommitFromStep: commit

@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: flask-demo
+  namespace: argocd
+spec:
+  generators:
+  - git:
+      repoURL: https://github.com/mastercam123/kargo-helm.git
+      revision: HEAD
+      directories:
+      - path: env-flask/*
+  template:
+    metadata:
+      name: flask-{{path.basename}}
+      annotations:
+        kargo.akuity.io/authorized-stage: flask:{{path.basename}}
+    spec:
+      destination:
+        namespace: flask-{path.basename}}
+        server: https://kubernetes.default.svc
+      project: flask
+      source:
+        path: charts/flask
+        repoURL: https://github.com/mastercam123/kargo-helm.git
+        helm:
+          valueFiles:
+          - "/env-flask/{{path.basename}}/values.yaml"
+          - "/env-flask/{{path.basename}}/feature-flags.yaml"
+      syncPolicy:
+        syncOptions:
+        - CreateNamespace=true
+        automated:
+          prune: false
+          selfHeal: false

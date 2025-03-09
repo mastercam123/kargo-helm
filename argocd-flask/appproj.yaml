@@ -1,8 +1,9 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
-metadata:
+annotations:
   argocd.argoproj.io/sync-wave: "0"
-  name: kargo-flask-demo
+metadata:
+  name: flask
   namespace: argocd
 spec:
   clusterResourceWhitelist:
@@ -10,7 +11,7 @@ spec:
     kind: Namespace
   destinations:
   - name: '*'
-    namespace: kargo-flask-demo-*
+    namespace: flask-*
     server: '*'
   namespaceResourceWhitelist:
   - group: '*'
